@@ -17,9 +17,6 @@ add_ppa(){
 # Entrypoint...
 cd ..
 
-# Add bitcoin PPA
-add_ppa && apt-get update
-
 # Install dependancies
 apt-get -qq install jq curl \
         build-essential \
@@ -33,15 +30,3 @@ apt-get -qq install jq curl \
         libboost-all-dev \
         software-properties-common \
         libdb4.8-dev libdb4.8++-dev
-
-# Clone the HTMLCOIN Core repository and compile
-git clone https://github.com/HTMLCOIN/HTMLCOIN --recursive
-cd HTMLCOIN
-./autogen.sh
-./configure --without-gui
-make -j$(nproc)
-make install
-chown -R $(logname): ../HTMLCOIN
-
-echo -e "\e[1m\e[92mSetup complete! Now run ./start.sh\e[0m"
-echo
